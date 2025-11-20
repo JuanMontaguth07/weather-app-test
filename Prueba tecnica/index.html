@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Climas</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<div class="meteors">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
+
+<!-- =======================
+        TOGGLE DÍA / NOCHE
+======================= -->
+<div id="themeToggle" class="toggle" role="switch" aria-checked="false" aria-label="Cambiar tema">
+    <div class="circle"></div>
+    <div class="sun"></div>
+    <div class="moon"></div>
+</div>
+
+<!-- =======================
+        CAPAS DEL PAISAJE
+======================= -->
+
+<div class="sky"></div>
+<div class="clouds"></div>
+<div class="stars"></div>
+<div class="meteors"></div>
+<div class="city"></div>
+<div class="grass"></div>
+
+<!-- =======================
+        APP
+======================= -->
+
+<div id="app">
+
+    <!-- Buscador -->
+    <div class="search-box">
+        <input type="text" id="cityInput" placeholder="Escribe una ciudad...">
+        <button id="searchBtn">Buscar</button>
+    </div>
+
+    <!-- Error -->
+    <div id="errorBox" class="error hidden">
+        <span>⚠ Ciudad no encontrada</span>
+    </div>
+
+    <!-- Tarjeta Clima -->
+    <div id="weatherCard" class="weather hidden">
+        <h2 id="cityName"></h2>
+        <img id="weatherIcon" alt="">
+        <h1 id="temp"></h1>
+        <p id="description"></p>
+
+        <div class="details">
+            <div>💧 Humedad: <span id="humidity"></span>%</div>
+            <div>🌬 Viento: <span id="wind"></span> km/h</div>
+            <div>🔥 Sensación: <span id="feels"></span>°C</div>
+        </div>
+    </div>
+
+    <!-- Pronóstico -->
+    <div id="forecast" class="forecast hidden"></div>
+
+    <!-- Botón Ayuda -->
+    <button id="helpBtn" class="help" aria-label="Ayuda">?</button>
+
+    <!-- Modal Ayuda -->
+    <div id="helpModal" class="modal hidden" aria-hidden="true" role="dialog" aria-modal="true">
+        <div class="modal-content">
+            <h2>Ayuda rápida</h2>
+            <p>Puedes buscar ciudades en español o inglés. Ejemplos:</p>
+            <ul>
+                <li>Bogotá</li>
+                <li>Medellín</li>
+                <li>Tokyo</li>
+                <li>New York</li>
+                <li>Paris</li>
+            </ul>
+            <button id="closeModal">Cerrar</button>
+        </div>
+    </div>
+
+</div><!-- FIN DE APP -->
+
+<script src="script.js"></script>
+
+</body>
+</html>

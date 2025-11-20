@@ -1,0 +1,398 @@
+/* ========================
+      RESET GENERAL
+======================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    transition: background 0.8s ease, color 0.6s ease;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding-top: 40px;
+    overflow-x: hidden;
+}
+
+#app {
+    width: 92%;
+    max-width: 500px;
+    z-index: 10;
+}
+
+/* ========================
+    ESTILOS BASE DE UI
+======================== */
+.search-box {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    z-index: 10;
+    position: relative;
+}
+
+.search-box input {
+    flex: 1;
+    padding: 14px;
+    font-size: 18px;
+    border-radius: 12px;
+    outline: none;
+    border: 1px solid rgba(0,0,0,0.2);
+    background: rgba(255,255,255,0.7);
+    backdrop-filter: blur(6px);
+}
+
+.search-box button {
+    padding: 14px 20px;
+    border-radius: 12px;
+    font-size: 18px;
+    cursor: pointer;
+    border: none;
+    background: #3a6cff;
+    color: white;
+}
+
+.error {
+    background: #ff4d4d;
+    padding: 12px;
+    color: white;
+    margin-bottom: 15px;
+    text-align: center;
+    border-radius: 10px;
+    font-weight: bold;
+    z-index: 10;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Tarjeta clima */
+.weather {
+    padding: 25px;
+    border-radius: 20px;
+    text-align: center;
+    margin-bottom: 20px;
+    backdrop-filter: blur(10px);
+    background: rgba(255,255,255,0.5);
+    border: 1px solid rgba(0,0,0,0.15);
+}
+
+.weather img {
+    width: 110px;
+    margin-bottom: 10px;
+}
+
+.details {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+/* Pronóstico */
+.forecast {
+    display: flex;
+    justify-content: space-between;
+}
+
+.forecast-item {
+    width: 31%;
+    padding: 12px;
+    border-radius: 14px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    background: rgba(255,255,255,0.5);
+    border: 1px solid rgba(0,0,0,0.15);
+}
+
+.forecast-item img {
+    width: 55px;
+}
+
+/* ========= MODAL ========= */
+.help {
+    position: fixed;
+    bottom: 26px;
+    right: 22px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(180deg,#4a82ff,#3a6cff);
+    color: white;
+    border: none;
+    box-shadow: 0 8px 24px rgba(58,108,255,0.28);
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 9999;
+}
+
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    display: none; /* <-- cambia a none por defecto */
+    align-items: center;
+    justify-content: center;
+    z-index: 9998;
+}
+
+.modal:not(.hidden) {
+    display: flex; /* <-- solo se activa cuando NO tiene la clase hidden */
+}
+
+
+.modal-content {
+    width: 90%;
+    max-width: 400px;
+    padding: 20px;
+    background: rgba(255,255,255,0.9);
+    border-radius: 14px;
+    border: 1px solid rgba(0,0,0,0.25);
+}
+
+/* =========================
+   TOGGLE DÍA / NOCHE MEJORADO
+========================= */
+.toggle{
+    position: fixed;
+    top: 18px;
+    right: 18px;
+    width: 88px;
+    height: 40px;
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    padding: 6px;
+    z-index: 9900;
+    cursor: pointer;
+    user-select: none;
+    background: rgba(255,255,255,0.10);
+    backdrop-filter: blur(8px);
+    transition: 0.6s;
+}
+
+.circle{
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: white;
+    transition: transform 0.6s ease, background 0.6s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform-origin: center center;
+}
+
+.sun, .moon{
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.sun{
+    left: 10px;
+    background: radial-gradient(#fff6c8,#ffb24b);
+    transform: rotate(0deg);
+}
+
+.moon{
+    right: 10px;
+    background: radial-gradient(#ffffff,#d8d8ff);
+    transform: rotate(0deg);
+}
+
+/* Movimiento del círculo */
+body.light .circle{
+    transform: translateX(4px) rotate(0deg);
+}
+
+body.dark .circle{
+    transform: translateX(46px) rotate(180deg);
+    background: #d6d6d6;
+}
+
+/* Sol y luna aparecen y rotan */
+body.light .sun{
+    opacity: 1;
+    transform: rotate(360deg);
+}
+
+body.light .moon{
+    opacity: 0;
+    transform: rotate(-90deg);
+}
+
+body.dark .moon{
+    opacity: 1;
+    transform: rotate(360deg);
+}
+
+body.dark .sun{
+    opacity: 0;
+    transform: rotate(-90deg);
+}
+
+/* ============================
+     PAISAJE ANIMADO
+============================ */
+
+/* CIELO */
+.sky {
+    position: fixed;
+    inset: 0;
+    z-index: -10;
+    background: linear-gradient(#87CEFA,#E0F6FF);
+    transition: 1.5s ease;
+}
+
+body.dark .sky {
+    background: linear-gradient(#0a0a1a,#000010);
+}
+
+/* NUBES (solo día) */
+.clouds {
+    position: fixed;
+    inset: 0;
+    z-index: -9;
+    background: url('nubes.png') repeat-x;
+    background-size: 800px;
+    animation: moveClouds 60s linear infinite;
+    opacity: 0.5;
+    transition: opacity 1.2s ease;
+}
+
+@keyframes moveClouds {
+    0%{ background-position-x: 0; }
+    100%{ background-position-x: -2400px; }
+}
+
+body.dark .clouds { opacity: 0; }
+
+/* ESTRELLAS (solo noche) */
+.stars {
+    position: fixed;
+    inset: 0;
+    z-index: -8;
+    background: url('stars.png') center/cover no-repeat;
+    opacity: 0;
+    transition: opacity 1.5s ease;
+}
+
+body.dark .stars { opacity: 0.85; }
+
+/* METEOROS */
+.meteors {
+    position: fixed;
+    inset: 0;
+    z-index: -7;
+    opacity: 0;
+    pointer-events: none;
+}
+
+body.dark .meteors { opacity: 1; }
+
+.meteors::before {
+    content: '';
+    position: absolute;
+    top: -10%;
+    left: 80%;
+    width: 3px;
+    height: 80px;
+    background: linear-gradient(white,transparent);
+    transform: rotate(45deg);
+    animation: meteor 3.8s linear infinite;
+}
+.meteors span {
+    position: absolute;
+    top: -10%;
+    width: 3px;
+    height: 80px;
+    background: linear-gradient(white, transparent);
+    transform: rotate(45deg);
+    animation: meteor 3.8s linear infinite;
+    opacity: 0.8;
+}
+
+/* Diferentes posiciones y retrasos */
+.meteors span:nth-child(1) { left: 10%; animation-delay: 0s; }
+.meteors span:nth-child(2) { left: 30%; animation-delay: 1s; }
+.meteors span:nth-child(3) { left: 60%; animation-delay: 0.5s; }
+.meteors span:nth-child(4) { left: 80%; animation-delay: 1.8s; }
+
+@keyframes meteor {
+    0%{ opacity:1; transform:translate(0,0) rotate(45deg); }
+    100%{ opacity:0; transform:translate(-500px,500px) rotate(45deg); }
+}
+
+/* CIUDAD NOCHE */
+.city {
+    position: fixed;
+    bottom: 0;
+    height: 700px;
+    width: 110%;
+    background: url('cuidad-noche.png') repeat-x;
+    background-size: cover;
+    z-index: -2;
+    opacity: 0;
+    transition: opacity 1.3s ease;
+}
+
+body.dark .city { opacity: 1; }
+
+/* PASTO DÍA */
+.grass {
+    position: fixed;
+    bottom: 0;
+    height: 740px;
+    width: 100%;
+    background: url('pasto-dia.png') repeat-x;
+    background-size: cover;
+    z-index: -3;
+    opacity: 1;
+    transition: opacity 1.3s ease;
+}
+
+body.dark .grass { opacity: 0; }
+/* =========================
+       ESTILOS MODAL
+========================= */
+
+.modal-content {
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(20px);
+    border-radius: 18px;
+    padding: 22px;
+    width: 90%;
+    max-width: 420px;
+    border: 1px solid rgba(255,255,255,0.3);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+    animation: popIn 0.35s ease;
+}
+
+@keyframes popIn {
+    0% { transform: scale(0.8); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+#closeModal {
+    width: 100%;
+    margin-top: 12px;
+    padding: 12px;
+    border-radius: 12px;
+    background: #3a6cff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 17px;
+    transition: 0.3s;
+}
+
+#closeModal:hover {
+    background: #5a7fff;
+}
